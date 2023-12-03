@@ -1,0 +1,17 @@
+config:
+  openai:
+    api_key: "replace"
+    chat_model: "gpt-4-1106-preview"
+    func_model: "gpt-3.5-turbo-1106"
+    # chat_model: "gpt-3.5-turbo-1106"
+    # chat_model: "gpt-3.5-turbo-0613"
+    temperature: 0
+    embedding_model: "text-embedding-ada-002"
+    seed: 12345
+    top_p: 1.0
+
+  mysql_database:
+    user_name: "root"
+    password: "123456"
+    server: "127.0.0.1"
+    dbname: "consultagent"
