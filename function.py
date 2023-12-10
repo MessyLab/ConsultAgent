@@ -77,6 +77,21 @@ function_list = [
     },
 
     # {
+    #     "name": "search_answers",
+    #     "description": "search the answer based on user query",
+    #     "parameters": {
+    #         "type": "object",
+    #         "properties": {
+    #             "query": {
+    #                 "type": "string",
+    #                 "description": "the real question from user"
+    #             }
+    #         },
+    #         "required": ["query"]
+    #     }
+    # },
+
+    # {
     #     "name": "make_a_plan",
     #     "description": "在用户完成了基本信息的录入之后，根据用户输入的信息生成"
     # }

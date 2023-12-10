@@ -14,16 +14,17 @@ class LLM:
         pass
 
 class OpenaiLLM:
-    def __init__(self):
+    def __init__(self, system_prompt: str):
         super(OpenaiLLM, self).__init__()
         self.config = ConfigParser()
 
         self.model = self.config.get(key='openai')['chat_model']
         self.temperature = self.config.get(key='openai')['temperature']
-        self.max_tokens = 2048
+        self.max_tokens = 4096
         self.topp = self.config.get(key='openai')['top_p']
         self.seed = self.config.get(key='openai')['seed']
         self.client = OpenAI(api_key = self.config.get(key='openai')['api_key'])
+        self.system_prompt = system_prompt
 
     @staticmethod
     def concat_chat_message(system_prompt, history, query):
@@ -36,23 +37,26 @@ class OpenaiLLM:
     def get_response(self,
                      messages,
                      stream=False,
-                     timeout=10,
+                     timeout=60,
                      **kwargs):
+        
+        messages.insert(0, {"role": "system", "content": self.system_prompt})
 
-        while True:
-            try:
-                response = self.client.chat.completions.create(
-                    model = self.model,
-                    messages = messages,
-                    temperature = self.temperature,
-                    stream = stream,
-                    max_tokens = self.max_tokens,
-                    top_p = self.topp,
-                    seed = self.seed,
-                    timeout = timeout,
-                )
-                break
-            except Exception as e:
-                print(e)
+        try:
+            response = self.client.chat.completions.create(
+                model = self.model,
+                messages = messages,
+                temperature = self.temperature,
+                stream = stream,
+                max_tokens = self.max_tokens,
+                top_p = self.topp,
+                seed = self.seed,
+                timeout = timeout,
+            )
+            messages.pop(0)
+            return response.choices[0].message.content
+        except Exception as e:
+            messages.pop(0)
+            print(e)
 
-        return response.choices[0].message
+        

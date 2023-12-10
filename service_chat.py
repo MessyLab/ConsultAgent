@@ -4,7 +4,7 @@ import json
 from prompt import AGENT_SYSTEM_PROMPT, CONSULT_SYSTEM_PROMPT, FUNCTION_CALLING_PROMPT
 from function import function_list
 
-from connect_db import DatabaseAgent
+from rdb_service import DatabaseAgent
 from agent1 import OpenaiLLMwF
 from agent2 import OpenaiLLM
 

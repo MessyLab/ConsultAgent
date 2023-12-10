@@ -4,6 +4,7 @@ import os
 import time
 from config import ConfigParser
 # from prompt import system_prompt
+import json
 
 class LLM:
     def __init__(self) -> None:
@@ -13,12 +14,12 @@ class LLM:
     def get_response():
         pass
 
-class OpenaiLLMwF:
+class DetectAgent:
     def __init__(self, system_prompt: str):
-        super(OpenaiLLMwF, self).__init__()
+        super(DetectAgent, self).__init__()
         self.config = ConfigParser()
 
-        self.model = self.config.get(key='openai')['func_model']
+        self.model = self.config.get(key='openai')['detect_model']
         self.temperature = self.config.get(key='openai')['temperature']
         self.max_tokens = 2048
         self.topp = self.config.get(key='openai')['top_p']
@@ -37,29 +38,29 @@ class OpenaiLLMwF:
     def get_response(self,
                      messages,
                      stream=False,
-                     functions=None,
-                     function_call="auto",
+                     timeout=10,
                      **kwargs):
-        
+
         messages.insert(0, {"role": "system", "content": self.system_prompt})
         try:
-            if functions:
-                response = self.client.chat.completions.create(
-                    model = self.model,
-                    messages = messages,
-                    functions = functions,
-                    function_call = function_call,
-                    temperature = self.temperature,
-                    max_tokens = self.max_tokens,
-                    top_p = self.topp,
-                    seed = self.seed,
-                    timeout = 10,
+            response = self.client.chat.completions.create(
+                model = self.model,
+                messages = messages,
+                temperature = self.temperature,
+                stream = stream,
+                max_tokens = self.max_tokens,
+                top_p = self.topp,
+                seed = self.seed,
+                timeout = timeout,
+            )
+            
+            result = response.choices[0].message.content
+            json_part = result.split('```json\n')[1].split('\n```')[0]
+            messages.pop(0)
+            return json.loads(json_part)
 
-                )
-                messages.pop(0)
-                return response.choices[0].message
-            else:
-                return "no call function"
         except Exception as e:
+            messages.pop(0)
             print(e)
+
         

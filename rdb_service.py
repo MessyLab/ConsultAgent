@@ -69,6 +69,7 @@ class DatabaseAgent:
             user.eng_toelf = toelf if toelf else user.eng_toelf
             user.score_gpa = gpa if gpa else user.score_gpa
             session.commit()
+            return None
         else:
             return f"No user found with user_id {user_uuid}"
     
@@ -113,6 +114,7 @@ class DatabaseAgent:
             user.target_job = trg_job if trg_job else user.target_job
             user.budget = budget if budget else user.budget
             session.commit()
+            return None
         else:
             return f"No user found with user_id {user_uuid}"
 
