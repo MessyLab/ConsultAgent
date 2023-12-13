@@ -4,7 +4,7 @@ import json
 from prompt import AGENT_SYSTEM_PROMPT, CONSULT_SYSTEM_PROMPT, FUNCTION_CALLING_PROMPT
 from function import function_list
 
-from connect_db import DatabaseAgent
+from rdb_service import DatabaseAgent
 from agent1 import OpenaiLLMwF
 from agent2 import OpenaiLLM
 
@@ -48,8 +48,8 @@ def main():
         "add_target_infor": db_agent.add_target_infor
     }
 
-    function_model = OpenaiLLMwF()
-    chat_model = OpenaiLLM()
+    function_model = OpenaiLLMwF(FUNCTION_CALLING_PROMPT)
+    chat_model = OpenaiLLM(AGENT_SYSTEM_PROMPT)
 
     st.title("Upply")
     query = st.chat_input("Enter your words")
@@ -96,8 +96,9 @@ def main():
                     pass
             
         print("*****" * 20)
-        content = chat_respond.content
-        st.session_state['generated'].append(content)
+        # content = chat_respond.content
+        content = chat_respond
+        st.session_state['generated'].append(chat_respond)
         print(content)
 
         st.session_state['chat_agent_messages'].append({"role": "assistant", "content": content})

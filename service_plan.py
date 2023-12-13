@@ -1,5 +1,5 @@
 from prompt import AGENT_SYSTEM_PROMPT, CONSULT_SYSTEM_PROMPT, FUNCTION_CALLING_PROMPT
-from connect_db import DatabaseAgent
+from rdb_service import DatabaseAgent
 from agent2 import OpenaiLLM
 
 def save_to_txt(string_content, filename='test.md'):
@@ -18,7 +18,7 @@ def main():
     #         'content': GENERIC_SYSTEM_PROMPT,
     #         }] if GENERIC_SYSTEM_PROMPT else ""
 
-    db_agent = DatabaseAgent()
+    db_agent = DatabaseAgent(CONSULT_SYSTEM_PROMPT)
     chat_model = OpenaiLLM()
     chat_model.model = "gpt-4-1106-preview"
     # chat_model.model = "gpt-3.5-turbo-1106"
@@ -27,7 +27,8 @@ def main():
 
     Session = db_agent.init_connection_db()
     # user_uuid = "c9deab9e-f812-4014-b648-976c9b4fa21e"
-    user_uuid = "11ccadc9-06e5-4b9f-8384-3b5624e9a2ee"
+    # user_uuid = "11ccadc9-06e5-4b9f-8384-3b5624e9a2ee"
+    user_uuid = "0af480a2-f03c-425e-a8ec-53ed0439cd7e"
 
     db_agent.user_uuid = user_uuid
     missing_fields = db_agent.check_missing_fields(user_uuid=user_uuid)

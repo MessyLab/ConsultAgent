@@ -1,2 +1,3 @@
 openai
 langchain
+g4f
