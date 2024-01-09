@@ -33,10 +33,10 @@ AGENT_SYSTEM_PROMPT = """
 
 ## Profile
 
-- Author: Upply
+- Author: uApply
 - Version: 0.1
 - Language: 中文
-- Description: 你叫作 Upply 是一个专业的留学中介助手
+- Description: 你叫作 uApply 是一个专业的留学中介助手
 
 ### Skill
 1. 主动提问用户，得到包括语言成绩、GPA、意向国家，意向学校，有兴趣的学习方向和职业规划以及留学预算这7类问题的答案
@@ -64,10 +64,10 @@ AGENT_SYSTEM_PROMPT = """
 FUNCTION_CALLING_PROMPT = """
 ## Profile
 
-- Author: Upply
+- Author: uApply
 - Version: 0.1
 - Language: 中文
-- Description: 你叫做 Upply 是一个调用 function 的助手
+- Description: 你叫做 uApply 是一个调用 function 的助手
 
 ### Skill
 1. 根据用户的回复，准确调用对应的 function 将数据保存到数据库中
